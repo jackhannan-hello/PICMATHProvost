@@ -1,44 +1,60 @@
 //import logo from './logo.svg';
-import { React, useState } from 'react';
+import { React, useState, Component } from 'react';
 import './App.css';
 import TextField from "@mui/material/TextField";
 import data from "./Components/ListData";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
+class Table extends Component {
+    constructor(props) {
+        super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
+        this.state = { //state is by default an object
+            courses: []
+        }
+    }
 
-//const allowedExtensions = ["csv"];
+    renderTableData() {
+        return this.state.courses.map((course, index) => {
+            const { COURSE_TITLE, TIL, SQL, INQ, ANL, INT, CRE, COM, COL, GCU } = course //destructuring
+            return (
+                <tr key={COURSE_TITLE}>
+                    <td>{COURSE_TITLE}</td>
+                    <td>{TIL}</td>
+                    <td>{SQL}</td>
+                    <td>{INQ}</td>
+                    <td>{ANL}</td>
+                    <td>{INT}</td>
+                    <td>{CRE}</td>
+                    <td>{COM}</td>
+                    <td>{COL}</td>
+                    <td>{GCU}</td>
+                </tr>
+            )
+        })
+    }
 
-/*function TIL(props) {
-    return ({ props.value });
-}
-function SQL(props) {
-    return ({ props.value });
-}
-function INQ(props) {
-    return ({ props.value });
-}
-function ANL(props) {
-    return ({ props.value });
-}
-function INT(props) {
-    return ({ props.value });
-}
-function CRE(props) {
-    return ({ props.value });
-}
-function COM(props) {
-    return ({ props.value });
-}
-function COL(props) {
-    return ({ props.value });
-}
-function GCU(props) {
-    return GCU {props.value};
-}
+    renderTableHeader() {
+        let header = Object.keys(this.state.courses[0])
+        return header.map((key, index) => {
+            return <th key={index}>{key.toUpperCase()}</th>
+        })
+    }
 
-function addClass() {
-    }*/
+    render() {
+        return (
+            <div>
+                <h1 id='title'>React Dynamic Table</h1>
+                <table id='courses'>
+                    <tbody>
+                        <tr>{this.renderTableHeader()}</tr>
+                        {this.renderTableData()}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+}
 
 // Create the App component
 function List(props) {
@@ -54,13 +70,14 @@ function List(props) {
             return el.COURSE_TITLE.toLowerCase().includes(props.input)
         }
     })
-    var selectCourse;
     return (
         <ul>
             {filteredData.map((item) => (
                 <Stack direction="column">
                     <Button variant="contained"
-                        onClick={() => Selected([item.COURSE_TITLE, item.TIL, item.SQL, item.INQ, item.ANL, item.INT, item.CRE, item.COM, item.GCU]) }
+                        onClick={() => this.setState.Table({
+                            arr: this.state.arr.concat('new value')
+                        }) }
                         //onClick={() => console.log([item.COURSE_TITLE, item.TIL, item.SQL, item.INQ, item.ANL, item.INT, item.CRE, item.COM, item.GCU])}
                         //onClick={() => { courseSelected.push(item); }, console.log(courseSelected)}
                         key={item.COURSE_CODE}>{item.COURSE_TITLE}
@@ -106,4 +123,5 @@ function App() {
 
 //<SelectSearch options={options} value="sv" name="language" placeholder="Choose your language" />
 
+export default Table;
 export default App;
