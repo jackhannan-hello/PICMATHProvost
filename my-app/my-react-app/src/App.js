@@ -1,5 +1,5 @@
 //import logo from './logo.svg';
-import { React, useState, Component } from 'react';
+import React, { useState, Component } from 'react';
 import './App.css';
 import TextField from "@mui/material/TextField";
 import data from "./Components/ListData";
@@ -10,8 +10,12 @@ class Table extends Component {
     constructor(props) {
         super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
         this.state = { //state is by default an object
-            courses: []
+            courses: [{}]
         }
+    }
+
+    selected(course) {
+        this.setState({ courses: course })
     }
 
     renderTableData() {
@@ -75,10 +79,12 @@ function List(props) {
             {filteredData.map((item) => (
                 <Stack direction="column">
                     <Button variant="contained"
-                        onClick={() => this.setState.Table({
-                            arr: this.state.arr.concat('new value')
+                        onClick={() => Table.selected({
+                            courses: {
+                            "COURSE_TITLE": item.COURSE_TITLE, "TIL": item.TIL, "SQL": item.SQL, "INQ": item.INQ, "ANL": item.ANL, "INT": item.INT, "CRE": item.CRE, "COM": item.COM, "GCU": item.GCU }
                         }) }
-                        //onClick={() => console.log([item.COURSE_TITLE, item.TIL, item.SQL, item.INQ, item.ANL, item.INT, item.CRE, item.COM, item.GCU])}
+                        /*onClick={() => console.log( {
+                            "COURSE_TITLE": item.COURSE_TITLE, "TIL": item.TIL, "SQL": item.SQL, "INQ": item.INQ, "ANL": item.ANL, "INT": item.INT, "CRE": item.CRE, "COM": item.COM, "GCU": item.GCU })}*/
                         //onClick={() => { courseSelected.push(item); }, console.log(courseSelected)}
                         key={item.COURSE_CODE}>{item.COURSE_TITLE}
                     </Button>
@@ -87,13 +93,6 @@ function List(props) {
             ))}
         </ul>
     )
-}
-
-function Selected(props) {
-    
-    
-
-
 }
 
 function App() {
@@ -107,6 +106,7 @@ function App() {
     return (
         <div className="main">     
             <h1>Course Selection</h1>
+            <Table />
             <div className="search">
                 <TextField
                     id="outlined-basic"
@@ -123,5 +123,4 @@ function App() {
 
 //<SelectSearch options={options} value="sv" name="language" placeholder="Choose your language" />
 
-export default Table;
 export default App;
